@@ -1,8 +1,9 @@
 name: easy_model
-description: A new Flutter package project.
+description: Simple flutter state management package, can use global and local management
 version: 0.0.1
-author:
-homepage:
+verified publisher:
+  - agedchen@gmail.com
+homepage: https://github.com/asjqkkkk/easy_model
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

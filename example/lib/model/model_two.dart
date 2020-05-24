@@ -13,5 +13,9 @@ class ModelTwo extends Model{
   }
 
 
-  int value = 100;
+  ModelTwo(){
+    print('${this.runtimeType} create');
+  }
+
+  int value = 0;
 }

@@ -12,5 +12,10 @@ class ModelThree extends Model{
     print('${this.runtimeType} dispose');
   }
 
-  int value = 520;
+
+  ModelThree(){
+    print('${this.runtimeType} create');
+  }
+
+  int value = 0;
 }

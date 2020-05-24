@@ -1,14 +1,12 @@
 import 'package:easy_model/easy_model.dart';
-import '../util/push_util.dart';
+import '../common/common.dart';
 import '../model/all_model.dart';
 import 'package:flutter/material.dart';
-
 
 class PageTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final modelTwo = ModelGroup.findModel<ModelTwo>();
-    print('${this.runtimeType}重新build');
 
     return Scaffold(
       appBar: AppBar(
@@ -19,54 +17,51 @@ class PageTwo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            FlatButton(
-                onPressed: () {
-                  modelTwo.value++;
-                  push(context, (ctx, model) => PageThree(), ModelThree());
-                },
-                child: Text('下一页')),
-            ModelWidget<WidgetModel>(
-              builder: (ctx, model) => Text('${model.value}'),
-              model: WidgetModel(),
+            Button(
+              onPressed: () {
+                push(context, (ctx, model) => PageThree(), () => ModelThree());
+              },
             ),
-            FlatButton(
+            SizedBox(
+              height: 20,
+            ),
+            ModelWidget<WidgetModel>(
+              childBuilder: (ctx, model) => Text(
+                'ModelWidget value:${model.value}',
+                style: TextStyle(fontSize: 20),
+              ),
+              modelBuilder: () => WidgetModel(),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'PageTwo value:${modelTwo.value}',
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Button(
                 onPressed: () {
                   final model = ModelGroup.findModel<WidgetModel>();
                   model.value++;
+                  model.refresh();
+                },
+                enableRandomColor: true,
+                child: Text('Add ModelWidget value',
+                    style: TextStyle(color: Colors.white))),
+            Button(
+                onPressed: () {
                   modelTwo.value++;
                   modelTwo.refresh();
                 },
-                child: Text('修改')),
-            Text('${modelTwo.value}'),
+                enableRandomColor: true,
+                child: Text('Add PageTwo value',
+                    style: TextStyle(color: Colors.white))),
           ],
         ),
       ),
     );
-  }
-}
-
-
-class TestText extends StatefulWidget {
-  @override
-  _TestTextState createState() => _TestTextState();
-}
-
-class _TestTextState extends State<TestText> {
-
-  @override
-  void initState() {
-    print('创建');
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    print('销毁');
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Text('啊啊啊啊');
   }
 }

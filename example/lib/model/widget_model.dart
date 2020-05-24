@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 class WidgetModel extends Model{
 
-  int value = 666;
+  int value = 0;
 
   @override
   void initState() {
@@ -14,4 +14,9 @@ class WidgetModel extends Model{
   void dispose() {
     print('${this.runtimeType} dispose');
   }
+
+  WidgetModel(){
+    print('${this.runtimeType} create');
+  }
+
 }

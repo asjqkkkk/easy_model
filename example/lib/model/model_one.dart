@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ModelOne extends Model{
 
-
+  Brightness brightness = Brightness.light;
 
   @override
   void initState() {
@@ -14,13 +14,6 @@ class ModelOne extends Model{
   void dispose() {
     print('${this.runtimeType} dispose');
   }
-
-  void notify(){
-    refresh();
-    print('${this.runtimeType} 刷新啦');
-  }
-
-  Brightness brightness = Brightness.light;
 
   ModelOne(){
     print('${this.runtimeType}重新创建');

@@ -13,15 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ModelWidget<ModelOne>(
-        builder: (context, model){
-          print('页面一重新构建');
+        childBuilder: (context, model){
           return MaterialApp(
             title: 'Flutter Demo',
             theme: ThemeData(brightness: model.brightness),
             home: PageOne(),
           );
         },
-      model: ModelOne(),
+      modelBuilder:  () => ModelOne(),
     );
   }
 }
