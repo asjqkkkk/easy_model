@@ -1,5 +1,5 @@
 name: easy_model
-description: Simple flutter state management package, can use global and local management
+description: A simple flutter state management package, can use global and local management
 version: 0.0.1
 verified publisher:
   - agedchen@gmail.com

@@ -44,7 +44,6 @@ class _ModelWidgetState<T extends Model> extends State<ModelWidget<T>> {
     final key = widget.modelKey;
     _initialCheck(_model);
     _stateDelegate._refreshCallback = _refresh;
-    _model._stateDelegate = null;
     _model._stateDelegate = _stateDelegate;
     if (_model._createTime == 0) _model.initState();
     key == null
@@ -74,6 +73,7 @@ class _ModelWidgetState<T extends Model> extends State<ModelWidget<T>> {
     key == null
         ? ModelGroup._popModel(_model)
         : ModelGroup._popModelWithKey(key, _model);
+    _model = null;
   }
 
   bool _destroyCheck() {
@@ -137,17 +137,9 @@ class ModelGroup {
   static void _pushModelWithKey(String key, Model model) =>
       _repeatMap[key] = model;
 
-  static void _popModel(Model model) {
-    Model m = _map.remove(model.runtimeType);
-    m = null;
-    model = null;
-  }
+  static void _popModel(Model model) => _map.remove(model.runtimeType);
 
-  static void _popModelWithKey(String key, Model model) {
-    Model m = _repeatMap.remove(key);
-    m = null;
-    model = null;
-  }
+  static void _popModelWithKey(String key, Model model) => _repeatMap.remove(key);
 
   static T findModel<T extends Model>() => _map[T];
 
