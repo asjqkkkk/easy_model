@@ -6,7 +6,7 @@ class PageOne extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${this.runtimeType}'),
+        title: Text('PageOne'),
       ),
       body: Center(child: Button(
         onPressed: () {

@@ -12,7 +12,7 @@ class PageThree extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${this.runtimeType}'),
+        title: Text('PageThree'),
       ),
       body: Center(
         child: Column(

@@ -10,7 +10,7 @@ class PageTwo extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${this.runtimeType}'),
+        title: Text('PageTwo'),
       ),
       body: Center(
         child: Column(
