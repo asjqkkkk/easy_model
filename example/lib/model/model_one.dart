@@ -15,6 +15,6 @@ class ModelOne extends Model {
   }
 
   ModelOne() {
-    print('${this.runtimeType}重新创建');
+    print('${this.runtimeType} create');
   }
 }
