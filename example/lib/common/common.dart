@@ -20,7 +20,8 @@ class Button extends StatelessWidget {
   final VoidCallback onPressed;
   final bool enableRandomColor;
 
-  const Button({Key key, this.onPressed, this.child, this.enableRandomColor = false})
+  const Button(
+      {Key key, this.onPressed, this.child, this.enableRandomColor = false})
       : super(key: key);
 
   @override
@@ -32,8 +33,6 @@ class Button extends StatelessWidget {
       onPressed: onPressed,
     );
   }
-
-
 }
 
 Color get randomColor =>

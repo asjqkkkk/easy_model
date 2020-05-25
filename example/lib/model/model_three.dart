@@ -1,7 +1,6 @@
 import 'package:easy_model/easy_model.dart';
 
-class ModelThree extends Model{
-
+class ModelThree extends Model {
   @override
   void initState() {
     print('${this.runtimeType} initState');
@@ -12,8 +11,7 @@ class ModelThree extends Model{
     print('${this.runtimeType} dispose');
   }
 
-
-  ModelThree(){
+  ModelThree() {
     print('${this.runtimeType} create');
   }
 

@@ -13,14 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ModelWidget<ModelOne>(
-        childBuilder: (context, model){
-          return MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(brightness: model.brightness),
-            home: PageOne(),
-          );
-        },
-      modelBuilder:  () => ModelOne(),
+      childBuilder: (context, model) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(brightness: model.brightness),
+          home: PageOne(),
+        );
+      },
+      modelBuilder: () => ModelOne(),
     );
   }
 }

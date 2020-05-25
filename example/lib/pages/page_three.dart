@@ -3,12 +3,9 @@ import 'package:example/common/common.dart';
 import '../model/all_model.dart';
 import 'package:flutter/material.dart';
 
-import 'test_page.dart';
-
 class PageThree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('${this.runtimeType}'),

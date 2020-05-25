@@ -8,7 +8,10 @@ class ModelWidget<T extends Model> extends StatefulWidget {
   final String modelKey;
 
   const ModelWidget(
-      {Key key, @required this.childBuilder, @required this.modelBuilder, this.modelKey})
+      {Key key,
+      @required this.childBuilder,
+      @required this.modelBuilder,
+      this.modelKey})
       : super(key: key);
 
   @override
@@ -22,6 +25,7 @@ typedef ModelBuilder<T extends Model> = T Function();
 
 class _ModelWidgetState<T extends Model> extends State<ModelWidget<T>> {
   final _StateDelegate _stateDelegate = _StateDelegate();
+  Model _model;
 
   @override
   void initState() {
@@ -36,47 +40,47 @@ class _ModelWidgetState<T extends Model> extends State<ModelWidget<T>> {
   }
 
   void _initial() {
-    Model model = _findModel() ?? widget.modelBuilder.call();
+    _model = _model ?? _findModel() ?? widget.modelBuilder.call();
     final key = widget.modelKey;
-    _initialCheck(model);
+    _initialCheck(_model);
     _stateDelegate._refreshCallback = _refresh;
-    model._stateDelegate = null;
-    model._stateDelegate = _stateDelegate;
-    if(model._createTime == 0) model.initState();
+    _model._stateDelegate = null;
+    _model._stateDelegate = _stateDelegate;
+    if (_model._createTime == 0) _model.initState();
     key == null
-        ? ModelGroup._pushModel(model)
-        : ModelGroup._pushModelWithKey(key, model);
+        ? ModelGroup._pushModel(_model)
+        : ModelGroup._pushModelWithKey(key, _model);
   }
 
   bool _initialCheck(Model model) {
     if (model == null)
       throw FlutterError('Model can not be null during initState');
-    final oldModel = _findModel();
+    Model oldModel = _findModel();
     if (oldModel != null) {
       oldModel._createTime++;
+      _model = oldModel;
+      oldModel = null;
       return true;
     }
     return false;
   }
 
   void _destroy() {
-    final model = _findModel();
     final key = widget.modelKey;
     _stateDelegate._refreshCallback = null;
     if (_destroyCheck()) return;
-    model._stateDelegate = null;
-    model.dispose();
+    _model._stateDelegate = null;
+    _model.dispose();
     key == null
-        ? ModelGroup._popModel(model)
-        : ModelGroup._popModelWithKey(key, model);
+        ? ModelGroup._popModel(_model)
+        : ModelGroup._popModelWithKey(key, _model);
   }
 
   bool _destroyCheck() {
-    final model = _findModel();
-    if (model == null)
+    if (_model == null)
       throw FlutterError('Model $T can not be null before dispose');
-    if (model._createTime > 0){
-      model._createTime--;
+    if (_model._createTime > 0) {
+      _model._createTime--;
       return true;
     }
     return false;
@@ -92,7 +96,7 @@ class _ModelWidgetState<T extends Model> extends State<ModelWidget<T>> {
 
   @override
   Widget build(BuildContext context) =>
-      widget.childBuilder.call(context, _findModel());
+      widget.childBuilder.call(context, _model);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -120,6 +124,7 @@ class Model {
 
 class _StateDelegate {
   VoidCallback _refreshCallback;
+
   void refresh() => _refreshCallback?.call();
 }
 
@@ -132,18 +137,19 @@ class ModelGroup {
   static void _pushModelWithKey(String key, Model model) =>
       _repeatMap[key] = model;
 
-  static void _popModel(Model model){
+  static void _popModel(Model model) {
     Model m = _map.remove(model.runtimeType);
     m = null;
+    model = null;
   }
 
-  static void _popModelWithKey(String key, Model model){
+  static void _popModelWithKey(String key, Model model) {
     Model m = _repeatMap.remove(key);
     m = null;
+    model = null;
   }
 
   static T findModel<T extends Model>() => _map[T];
 
   static T findModelByKey<T extends Model>(String key) => _repeatMap[key];
-
 }

@@ -1,8 +1,7 @@
 import 'package:easy_model/easy_model.dart';
 import 'package:flutter/cupertino.dart';
 
-class WidgetModel extends Model{
-
+class WidgetModel extends Model {
   int value = 0;
 
   @override
@@ -15,8 +14,7 @@ class WidgetModel extends Model{
     print('${this.runtimeType} dispose');
   }
 
-  WidgetModel(){
+  WidgetModel() {
     print('${this.runtimeType} create');
   }
-
 }
