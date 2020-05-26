@@ -1,6 +1,8 @@
 
 Language:[简体中文](https://github.com/asjqkkkk/easy_model/blob/master/README_ZH.md)
 
+![image](https://user-images.githubusercontent.com/30992818/82860003-f7158380-9f4a-11ea-8836-448fb5879c15.png)
+
 # 💼 easy_model
 
 [![support](https://img.shields.io/badge/platform-flutter%7Cdart%20vm-ff69b4.svg?style=flat-square)](https://github.com/asjqkkkk/easy_model)

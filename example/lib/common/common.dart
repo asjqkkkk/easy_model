@@ -37,3 +37,4 @@ class Button extends StatelessWidget {
 
 Color get randomColor =>
     Colors.primaries[Random().nextInt(Colors.primaries.length)];
+

@@ -1,5 +1,7 @@
 
-Language:[简体中文](https://github.com/asjqkkkk/easy_model/blob/master/README_ZH.md)|[English](https://github.com/asjqkkkk/easy_model/blob/master/README.md)
+Language:[English](https://github.com/asjqkkkk/easy_model/blob/master/README.md)
+
+![image](https://user-images.githubusercontent.com/30992818/82860003-f7158380-9f4a-11ea-8836-448fb5879c15.png)
 
 # 💼 easy_model
 
@@ -10,7 +12,7 @@ Language:[简体中文](https://github.com/asjqkkkk/easy_model/blob/master/READM
 
 易于使用的flutter状态管理组件，支持局部状态管理与全局状态管理
 
-- 支持 `initState()` 与 `dispose()` 
+- 支持 `initState()` 与 `dispose()`
 - 支持全局获取 `Model` 对象
 
 ## 🚀 开始
@@ -41,7 +43,7 @@ ModelWidget<YourModel>(
   modelBuilder: () => YourModel(),
 ),
 ```
-### 🔄 获取数据与刷新 
+### 🔄 获取数据与刷新
 
 获取数据
 
@@ -75,9 +77,3 @@ ModelWidget<YourModel>(
 ///获取Model
 final model = ModelGroup.findModelByKey<YourModel>('YourModelKey');
 ```
-
-## 🤗 欢迎提交issue或pr
-
-点击 [这里](https://github.com/asjqkkkk/easy_model/issues/new) 来创建一个issue
-
-点击 [这里](https://github.com/asjqkkkk/easy_model/compare) 来创建一个pull request (请通过fork `dev` 分支来提交pr)
