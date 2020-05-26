@@ -17,6 +17,12 @@ class ModelWidget<T extends Model> extends StatefulWidget {
       : super(key: key);
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ObjectFlagProperty<String>('_ModelKey', modelKey, ifNull: 'no modelKey'));
+  }
+
+  @override
   _ModelWidgetState createState() => _ModelWidgetState<T>();
 }
 
@@ -102,10 +108,7 @@ class _ModelWidgetState<T extends Model> extends State<ModelWidget<T>> {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(ObjectFlagProperty<ModelWidget>('_widget', widget,
-        ifNull: 'no widget'));
-    properties.add(ObjectFlagProperty<StatefulElement>('_element', context,
-        ifNull: 'not mounted'));
+    properties.add(ObjectFlagProperty<T>('_Model', _model, ifNull: 'no model'));
   }
 }
 
@@ -130,20 +133,20 @@ class _StateDelegate {
 }
 
 class ModelGroup {
-  static Map<Type, Model> _map = new HashMap();
-  static Map<String, Model> _repeatMap = new HashMap();
+  static Map<Type, Model> _typeMap = new HashMap();
+  static Map<String, Model> _keyMap = new HashMap();
 
-  static void _pushModel(Model model) => _map[model.runtimeType] = model;
+  static void _pushModel(Model model) => _typeMap[model.runtimeType] = model;
 
   static void _pushModelWithKey(String key, Model model) =>
-      _repeatMap[key] = model;
+      _keyMap[key] = model;
 
-  static void _popModel(Model model) => _map.remove(model.runtimeType);
+  static void _popModel(Model model) => _typeMap.remove(model.runtimeType);
 
   static void _popModelWithKey(String key, Model model) =>
-      _repeatMap.remove(key);
+      _keyMap.remove(key);
 
-  static T findModel<T extends Model>() => _map[T];
+  static T findModel<T extends Model>() => _typeMap[T];
 
-  static T findModelByKey<T extends Model>(String key) => _repeatMap[key];
+  static T findModelByKey<T extends Model>(String key) => _keyMap[key];
 }
