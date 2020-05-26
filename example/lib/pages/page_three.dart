@@ -4,9 +4,7 @@ import '../model/all_model.dart';
 import 'package:flutter/material.dart';
 
 class PageThree extends StatelessWidget {
-
   final modelThree = ModelGroup.findModel<ModelThree>();
-
 
   @override
   Widget build(BuildContext context) {

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class ModelWidget<T extends Model> extends StatefulWidget {
   final ChildBuilder<T> childBuilder;
   final ModelBuilder<T> modelBuilder;
+
+  ///use [modelKey] with [ModelGroup.findModelByKey], or [null] with [ModelGroup.findModel]
   final String modelKey;
 
   const ModelWidget(
@@ -18,9 +20,12 @@ class ModelWidget<T extends Model> extends StatefulWidget {
   _ModelWidgetState createState() => _ModelWidgetState<T>();
 }
 
+/// use [(context,model) => YourWidgetOrPage(),] instead of [(context,model) => yourWidgetOrPage,]
+/// to prevent [Widget] from being recreated
 typedef ChildBuilder<T extends Model> = Widget Function(
     BuildContext context, T model);
 
+/// use [() => YourModel()] instead of [() => yourModel] to avoid [Model] re-creation
 typedef ModelBuilder<T extends Model> = T Function();
 
 class _ModelWidgetState<T extends Model> extends State<ModelWidget<T>> {
@@ -55,13 +60,11 @@ class _ModelWidgetState<T extends Model> extends State<ModelWidget<T>> {
     if (model == null)
       throw FlutterError('Model can not be null during initState');
     Model oldModel = _findModel();
-    if (oldModel != null) {
-      oldModel._createTime++;
-      _model = oldModel;
-      oldModel = null;
-      return true;
-    }
-    return false;
+    if (oldModel == null) return false;
+    oldModel._createTime++;
+    _model = oldModel;
+    oldModel = null;
+    return true;
   }
 
   void _destroy() {
@@ -79,11 +82,9 @@ class _ModelWidgetState<T extends Model> extends State<ModelWidget<T>> {
   bool _destroyCheck() {
     if (_model == null)
       throw FlutterError('Model $T can not be null before dispose');
-    if (_model._createTime > 0) {
-      _model._createTime--;
-      return true;
-    }
-    return false;
+    if (_model._createTime <= 0) return false;
+    _model._createTime--;
+    return true;
   }
 
   void _refresh() {
@@ -139,7 +140,8 @@ class ModelGroup {
 
   static void _popModel(Model model) => _map.remove(model.runtimeType);
 
-  static void _popModelWithKey(String key, Model model) => _repeatMap.remove(key);
+  static void _popModelWithKey(String key, Model model) =>
+      _repeatMap.remove(key);
 
   static T findModel<T extends Model>() => _map[T];
 
