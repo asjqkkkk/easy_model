@@ -11,7 +11,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ModelWidget<ModelOne>(
+    return ModelWidget<GlobalModel>(
       childBuilder: (context, model) {
         return MaterialApp(
           title: 'Flutter Demo',
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           home: PageOne(),
         );
       },
-      modelBuilder: () => ModelOne(),
+      modelBuilder: () => GlobalModel(),
     );
   }
 }

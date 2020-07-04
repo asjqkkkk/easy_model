@@ -18,18 +18,20 @@ class PageThree extends StatelessWidget {
           children: <Widget>[
             Button(
                 onPressed: () {
-                  final modelOne = ModelGroup.findModel<ModelOne>();
-                  modelOne.brightness = modelOne.brightness == Brightness.light
-                      ? Brightness.dark
-                      : Brightness.light;
-                  modelOne.refresh();
+                  GlobalModel globalModel = ModelGroup.findModel<GlobalModel>();
+                  globalModel.brightness =
+                      globalModel.brightness == Brightness.light
+                          ? Brightness.dark
+                          : Brightness.light;
+                  globalModel.refresh();
+                  globalModel = null;
                 },
                 child: Text('Change ThemeData',
                     style: TextStyle(color: Colors.white))),
             Button(
                 onPressed: () {
                   final modelTwo = ModelGroup.findModel<ModelTwo>();
-                  modelTwo.value--;
+                  modelTwo.pageValue--;
                   modelTwo.refresh();
                 },
                 child: Text('Reduce PageTwo Value',

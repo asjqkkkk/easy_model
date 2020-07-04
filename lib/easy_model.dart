@@ -1,4 +1,6 @@
 import 'dart:collection';
+import 'part_mode.dart';
+export 'part_mode.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -19,20 +21,13 @@ class ModelWidget<T extends Model> extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(ObjectFlagProperty<String>('_ModelKey', modelKey, ifNull: 'no modelKey'));
+    properties.add(ObjectFlagProperty<String>('_ModelKey', modelKey,
+        ifNull: 'no modelKey'));
   }
 
   @override
   _ModelWidgetState createState() => _ModelWidgetState<T>();
 }
-
-/// use [(context,model) => YourWidgetOrPage(),] instead of [(context,model) => yourWidgetOrPage,]
-/// to prevent [Widget] from being recreated
-typedef ChildBuilder<T extends Model> = Widget Function(
-    BuildContext context, T model);
-
-/// use [() => YourModel()] instead of [() => yourModel] to avoid [Model] re-creation
-typedef ModelBuilder<T extends Model> = T Function();
 
 class _ModelWidgetState<T extends Model> extends State<ModelWidget<T>> {
   final _StateDelegate _stateDelegate = _StateDelegate();
@@ -124,7 +119,25 @@ class Model {
   void refresh() {
     _stateDelegate?.refresh();
   }
+
+  @mustCallSuper
+  void refreshPart(String partKey) {
+    Set<PartDelegate> set = PartModelGroup.findStateSet(partKey);
+    for (var delegate in set) {
+      delegate.refresh();
+      delegate = null;
+    }
+    set = null;
+  }
 }
+
+/// use [(context,model) => YourWidgetOrPage(),] instead of [(context,model) => yourWidgetOrPage,]
+/// to prevent [Widget] from being recreated
+typedef ChildBuilder<T extends Model> = Widget Function(
+    BuildContext context, T model);
+
+/// use [() => YourModel()] instead of [() => yourModel] to avoid [Model] re-creation
+typedef ModelBuilder<T extends Model> = T Function();
 
 class _StateDelegate {
   VoidCallback _refreshCallback;
@@ -133,8 +146,8 @@ class _StateDelegate {
 }
 
 class ModelGroup {
-  static Map<Type, Model> _typeMap = new HashMap();
-  static Map<String, Model> _keyMap = new HashMap();
+  static Map<Type, Model> _typeMap = HashMap();
+  static Map<String, Model> _keyMap = HashMap();
 
   static void _pushModel(Model model) => _typeMap[model.runtimeType] = model;
 
@@ -143,8 +156,7 @@ class ModelGroup {
 
   static void _popModel(Model model) => _typeMap.remove(model.runtimeType);
 
-  static void _popModelWithKey(String key, Model model) =>
-      _keyMap.remove(key);
+  static void _popModelWithKey(String key, Model model) => _keyMap.remove(key);
 
   static T findModel<T extends Model>() => _typeMap[T];
 

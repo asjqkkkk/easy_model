@@ -15,5 +15,6 @@ class ModelTwo extends Model {
     print('${this.runtimeType} create');
   }
 
-  int value = 0;
+  int pageValue = 0;
+  int partValue = 0;
 }

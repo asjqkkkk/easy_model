@@ -1,7 +1,7 @@
 import 'package:easy_model/easy_model.dart';
 import 'package:flutter/material.dart';
 
-class ModelOne extends Model {
+class GlobalModel extends Model {
   Brightness brightness = Brightness.light;
 
   @override
@@ -14,7 +14,7 @@ class ModelOne extends Model {
     print('${this.runtimeType} dispose');
   }
 
-  ModelOne() {
+  GlobalModel() {
     print('${this.runtimeType} create');
   }
 }

@@ -25,18 +25,18 @@ class PageTwo extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            ModelWidget<WidgetModel>(
+            PartModelWidget<ModelTwo>(
               childBuilder: (ctx, model) => Text(
-                'ModelWidget value:${model.value}',
+                'PartModelWidget value:${model.partValue}',
                 style: TextStyle(fontSize: 20),
               ),
-              modelBuilder: () => WidgetModel(),
+              partKey: '$ModelTwo',
             ),
             SizedBox(
               height: 20,
             ),
             Text(
-              'PageTwo value:${modelTwo.value}',
+              'PageTwo value:${modelTwo.pageValue}',
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(
@@ -44,16 +44,15 @@ class PageTwo extends StatelessWidget {
             ),
             Button(
                 onPressed: () {
-                  final model = ModelGroup.findModel<WidgetModel>();
-                  model.value++;
-                  model.refresh();
+                  modelTwo.partValue++;
+                  modelTwo.refreshPart('$ModelTwo');
                 },
                 enableRandomColor: true,
-                child: Text('Add ModelWidget value',
+                child: Text('Add PartModelWidget value',
                     style: TextStyle(color: Colors.white))),
             Button(
                 onPressed: () {
-                  modelTwo.value++;
+                  modelTwo.pageValue++;
                   modelTwo.refresh();
                 },
                 enableRandomColor: true,
