@@ -92,7 +92,7 @@ ModelWidget<YourModel>(
 )
 
 
-class PageTwo extends StatelessWidget{
+class YourWidgetOrPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
