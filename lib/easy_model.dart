@@ -1,8 +1,8 @@
 import 'dart:collection';
 import 'part_mode.dart';
 export 'part_mode.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class ModelWidget<T extends Model> extends StatefulWidget {
   final ChildBuilder<T> childBuilder;

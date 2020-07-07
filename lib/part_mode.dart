@@ -1,15 +1,10 @@
 import 'dart:collection';
 import 'easy_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 class PartModelWidget<T extends Model> extends StatefulWidget {
   final ChildBuilder<T> childBuilder;
-
-  ///use [partKey] with [Model.refreshPart] to refresh [PartModelWidget]
-  /// -- which is one part of [ModelWidget]
   final String partKey;
-
   final String modelKey;
 
   const PartModelWidget({
@@ -18,15 +13,6 @@ class PartModelWidget<T extends Model> extends StatefulWidget {
     @required this.partKey,
     this.modelKey,
   }) : super(key: key);
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(ObjectFlagProperty<String>('_ModelKey', modelKey,
-        ifNull: 'no modelKey'));
-    properties.add(ObjectFlagProperty<String>('_PartKey', partKey,
-        ifNull: 'no partKey'));
-  }
 
   @override
   _PartModelWidgetState createState() => _PartModelWidgetState<T>();
@@ -77,6 +63,7 @@ class _PartModelWidgetState<T extends Model> extends State<PartModelWidget<T>> {
 
 class PartDelegate {
   VoidCallback _refreshCallback;
+
   void refresh() => _refreshCallback?.call();
 }
 
