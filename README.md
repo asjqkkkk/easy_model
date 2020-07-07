@@ -80,6 +80,48 @@ ModelWidget<YourModel>(
 final model = ModelGroup.findModelByKey<YourModel>('YourModelKey');
 ```
 
+### 🦋 Partial refresh
+
+
+With the new `ModelWidget` and the new `Model`, you can achieve the effect of partial refresh, but if you think that `Model` is created too frequently, then you can use `PartModelWidget` to achieve partial refresh
+
+```
+ModelWidget<YourModel>(
+  childBuilder: (ctx, model) => YourWidgetOrPage(),
+  modelBuilder: () => YourModel(),
+  modelKey: 'YourModelKey'
+)
+
+
+class PageTwo extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context) {
+      return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            ChildOne(),
+            ChildTwo(),
+            PartModelWidget<YourModel>(
+              childBuilder: (ctx,YourModel model) => ChildThree(),
+              partKey: 'YourKey',
+            ),
+          ],
+        );
+  }
+}
+```
+
+In the above example, if you want to refresh `ChildThree()` separately, you can achieve it by calling the following method
+
+
+```
+model.refreshPart('YourKey')
+```
+
+This avoids frequent creation of `Model`. If multiple `PartModelWidget` correspond to the same `partKey`, they can be refreshed together every time they are refreshed!
+
 ## 🤗 Welcome for issue and pr
 
 Click [here](https://github.com/asjqkkkk/easy_model/issues/new) to create an issue
